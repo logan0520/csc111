@@ -34,10 +34,21 @@ class AdventureGame:
     """A text adventure game class storing all location, item and map data.
 
     Instance Attributes:
-        - # TODO add descriptions of public instance attributes as needed
+        - current_location_id: The ID of the location where the players currently is
+        - ongoing: Whether the game is still in progress
+        - score: The player's current score
+        - moves: The number of moves that the player has made
+        - max_moves: The maximum number of moves allowed
+        - inventory: Dictionary of items currently in player's possession
+        - max_inventory_size: Maximum number of items player can carry (max 2)
+        - deposited_items: Set of item names that have been deposited at Oak House
 
     Representation Invariants:
-        - # TODO add any appropriate representation invariants as needed
+        - current_location_id in self._locations
+        - score >= 0
+        - moves >= 0
+        - max_moves > 0
+        - len(inventory) <= max_inventory_size
     """
 
     # Private Instance Attributes (do NOT remove these two attributes):

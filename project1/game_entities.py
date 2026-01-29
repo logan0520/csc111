@@ -26,10 +26,19 @@ class Location:
     """A location in our text adventure game world.
 
     Instance Attributes:
-        - # TODO Describe each instance attribute here
+        - id_num: integer identifier for this location
+        - brief_description: Short description shown on repeat visits
+        - long_description: Full description shown on first visits
+        - available_commands: Dictionary mapping command strings to resulting location IDs
+        - items: List of item names currently at this locations
+        - visited: Whether the player has visited this location before
+        - name: Short name of this location
 
     Representation Invariants:
-        - # TODO Describe any necessary representation invariants
+        - id_num >= 1
+        - name != ''
+        - brief_description != ''
+        - long_description != ''
     """
 
     # This is just a suggested starter class for Location.
@@ -44,6 +53,7 @@ class Location:
     available_commands: dict[str, int]
     items: list[str]
     visited: bool = False
+    name: str
 
 
 @dataclass
@@ -51,10 +61,17 @@ class Item:
     """An item in our text adventure game world.
 
     Instance Attributes:
-        - # TODO Describe each instance attribute here
+        - name: Name of the item
+        - start_position: Location Id where the item starts
+        - target_position: Location Id where the item should be delivered for points
+        - target_points: Points awarded when item is delivered to target location
+        - description: Description of the item
 
     Representation Invariants:
-        - # TODO Describe any necessary representation invariants
+        - name != ''
+        - start_position >= 1
+        - target_position >= 1
+        - target_points >= 0
     """
 
     # NOTES:
@@ -69,6 +86,7 @@ class Item:
     start_position: int
     target_position: int
     target_points: int
+    description: str
 
 
 # Note: Other entities you may want to add, depending on your game plan:
