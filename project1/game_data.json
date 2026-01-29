@@ -2,23 +2,236 @@
   "locations": [
     {
       "id": 1,
-      "name": "Bahen 1F",
-      "brief_description": "You are on the first floor of the Bahen Center. There are elevators to the West, and an exit from the building to St. George street to the East. You see something shiny on the ground -- looks like a toonie?",
-      "long_description": "You are on the first floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. You better not disturb them. One student is rushing down the corridor, wearing a heavy-looking backpack and carrying a textbook in their arms. There are elevators to the West, and an exit from the building to St. George street to the East.",
+      "name": "Campus Entrance",
+      "brief_description": "You are at the campus entrance (your starting point).",
+      "long_description": "LOCATION 1\n\nYou are at the main campus entrance. You just woke up and realized you're missing important items! You need to find your USB drive, laptop charger, and lucky mug before 1pm. You can go east to explore the campus.",
       "available_commands": {
-        "go south": 4,
-        "go east": 2
+        "go east": 2,
+        "go south": 5
       },
-      "items": ["toonie"]
+      "items": []
+    },
+    {
+      "id": 2,
+      "name": "Main Path",
+      "brief_description": "You are on the main campus path.",
+      "long_description": "LOCATION 2\n\nYou are walking along the main campus path. Students are rushing to their classes. You can continue east or go back west. You can also head south.",
+      "available_commands": {
+        "go west": 1,
+        "go east": 3,
+        "go south": 6
+      },
+      "items": []
+    },
+    {
+      "id": 3,
+      "name": "Academic Building",
+      "brief_description": "You are near an academic building.",
+      "long_description": "LOCATION 3\n\nYou are standing near a large academic building. The morning sun reflects off its windows. You can go east to the cafe, west back to the path, or south.",
+      "available_commands": {
+        "go west": 2,
+        "go east": 4,
+        "go south": 7
+      },
+      "items": []
+    },
+    {
+      "id": 4,
+      "name": "Campus Cafe",
+      "brief_description": "You are at the campus cafe.",
+      "long_description": "LOCATION 4\n\nYou are at the busy campus cafe. The smell of coffee fills the air. You see your T-card on a table (you must have left it here yesterday!) and your lucky mug near the counter! You can go west or south.",
+      "available_commands": {
+        "go west": 3,
+        "go south": 8,
+        "pick up t-card": 4,
+        "pick up lucky mug": 4
+      },
+      "items": ["T-card", "Lucky Mug"]
+    },
+    {
+      "id": 5,
+      "name": "South Campus Path",
+      "brief_description": "You are on the south campus path.",
+      "long_description": "LOCATION 5\n\nYou are on a quieter path on the south side of campus. Trees line both sides. You can go north, east, or south.",
+      "available_commands": {
+        "go north": 1,
+        "go east": 6,
+        "go south": 9
+      },
+      "items": []
+    },
+    {
+      "id": 6,
+      "name": "Oak House Residence",
+      "brief_description": "You are at Oak House residence.",
+      "long_description": "LOCATION 6\n\nYou are standing in front of Oak House, your friend's residence. The door is locked with a key lock. Inside, you remember charging your laptop here yesterday! Your laptop charger must be inside! You can go west, east, or south.",
+      "available_commands": {
+        "go west": 5,
+        "go east": 7,
+        "go south": 10,
+        "pick up laptop charger": 6
+      },
+      "items": ["Laptop Charger"]
+    },
+    {
+      "id": 7,
+      "name": "Recreation Area",
+      "brief_description": "You are at the recreation area.",
+      "long_description": "LOCATION 7\n\nYou are at an outdoor recreation area. A few students are playing frisbee. You can go north, west, east, or south.",
+      "available_commands": {
+        "go north": 3,
+        "go west": 6,
+        "go east": 8,
+        "go south": 11
+      },
+      "items": []
+    },
+    {
+      "id": 8,
+      "name": "Student Center",
+      "brief_description": "You are at the student center.",
+      "long_description": "LOCATION 8\n\nYou are at the student center. It's bustling with activity. You can go north, west, or south.",
+      "available_commands": {
+        "go north": 4,
+        "go west": 7,
+        "go south": 12
+      },
+      "items": []
+    },
+    {
+      "id": 9,
+      "name": "West Courtyard",
+      "brief_description": "You are in the west courtyard.",
+      "long_description": "LOCATION 9\n\nYou are in a peaceful courtyard with benches and a small fountain. You can go north, east, or south.",
+      "available_commands": {
+        "go north": 5,
+        "go east": 10,
+        "go south": 13
+      },
+      "items": []
+    },
+    {
+      "id": 10,
+      "name": "Garden Path",
+      "brief_description": "You are on a garden path.",
+      "long_description": "LOCATION 10\n\nYou are walking along a beautiful garden path with flowers on both sides. You can go north, west, east, or south.",
+      "available_commands": {
+        "go north": 6,
+        "go west": 9,
+        "go east": 11,
+        "go south": 14
+      },
+      "items": []
+    },
+    {
+      "id": 11,
+      "name": "Bahen Center",
+      "brief_description": "You are at the Bahen Center.",
+      "long_description": "LOCATION 11\n\nYou are at the Bahen Center for Information Technology. You were working here yesterday! Your USB drive is on a desk in the corner! You can go north, west, east, or south.",
+      "available_commands": {
+        "go north": 7,
+        "go west": 10,
+        "go east": 12,
+        "go south": 15,
+        "pick up usb drive": 11
+      },
+      "items": ["USB Drive"]
+    },
+    {
+      "id": 12,
+      "name": "Science Building",
+      "brief_description": "You are at the science building.",
+      "long_description": "LOCATION 12\n\nYou are at the main science building. Lab equipment can be seen through the windows. You can go north, west, or south.",
+      "available_commands": {
+        "go north": 8,
+        "go west": 11,
+        "go south": 16
+      },
+      "items": []
+    },
+    {
+      "id": 13,
+      "name": "Robarts Library",
+      "brief_description": "You are at Robarts Library.",
+      "long_description": "LOCATION 13\n\nYou are at the entrance of Robarts Library. The massive brutalist building looms above. The entrance requires a T-card to enter. You studied here yesterday and remember seeing a dorm key on a study desk inside! You can go north, east, or south.",
+      "available_commands": {
+        "go north": 9,
+        "go east": 14,
+        "pick up dorm key": 13
+      },
+      "items": ["Dorm Key"]
+    },
+    {
+      "id": 14,
+      "name": "Central Plaza",
+      "brief_description": "You are at the central plaza.",
+      "long_description": "LOCATION 14\n\nYou are at a central plaza where many paths intersect. Students are sitting on benches. You can go north, west, east, or south.",
+      "available_commands": {
+        "go north": 10,
+        "go west": 13,
+        "go east": 15
+      },
+      "items": []
+    },
+    {
+      "id": 15,
+      "name": "East Quad",
+      "brief_description": "You are at the east quad.",
+      "long_description": "LOCATION 15\n\nYou are at the eastern quadrangle. Old oak trees provide shade. You can go north, west, or east.",
+      "available_commands": {
+        "go north": 11,
+        "go west": 14,
+        "go east": 16
+      },
+      "items": []
+    },
+    {
+      "id": 16,
+      "name": "Sports Complex",
+      "brief_description": "You are at the sports complex.",
+      "long_description": "LOCATION 16\n\nYou are at the athletic sports complex. You can hear the sounds of games being played inside. You can go north or west.",
+      "available_commands": {
+        "go north": 12,
+        "go west": 15
+      },
+      "items": []
     }
   ],
   "items": [
     {
-      "name": "toonie",
-      "description": "There is a toonie on the ground. Someone must have dropped it.",
-      "start_position": 1,
+      "name": "USB Drive",
+      "description": "A silver USB drive with all your project files. You desperately need this!",
+      "start_position": 11,
+      "target_position": 1,
+      "target_points": 50
+    },
+    {
+      "name": "Laptop Charger",
+      "description": "Your laptop charger. Your battery is almost dead!",
+      "start_position": 6,
+      "target_position": 1,
+      "target_points": 75
+    },
+    {
+      "name": "Lucky Mug",
+      "description": "Your lucky U of T mug. You can't submit without it!",
+      "start_position": 4,
+      "target_position": 1,
+      "target_points": 60
+    },
+    {
+      "name": "T-card",
+      "description": "Your student ID card. Needed to enter certain buildings.",
+      "start_position": 4,
       "target_position": 4,
-      "target_points": 5
+      "target_points": 0
+    },
+    {
+      "name": "Dorm Key",
+      "description": "A key to Oak House residence.",
+      "start_position": 13,
+      "target_position": 13,
+      "target_points": 0
     }
   ]
 }
