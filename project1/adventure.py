@@ -84,6 +84,11 @@ class AdventureGame:
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.current_location_id = initial_location_id  # game begins at this location
         self.ongoing = True  # whether the game is ongoing
+        self.score = 0
+        self.moves = 0
+        self.max_moves = 100
+        self.inventory = {}
+        self.max_inventory_size = 2
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item]]:
