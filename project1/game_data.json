@@ -2,9 +2,9 @@
   "locations": [
     {
       "id": 1,
-      "name": "Campus Entrance",
-      "brief_description": "You are at the campus entrance (your starting point).",
-      "long_description": "LOCATION 1\n\nYou are at the main campus entrance. You just woke up and realized you're missing important items! You need to find your USB drive, laptop charger, and lucky mug, then DEPOSIT them at Oak House (Location 15) before 1pm.\n\nIMPORTANT: You can only carry 2 items at a time!\n\nYou can DROP items to leave them here, or DEPOSIT items at Oak House to earn points.\n\nYou can go east or south.",
+      "name": "Front Campus",
+      "brief_description": "You are at Front Campus.",
+      "long_description": "LOCATION 1\n\nYou wake up on Front Campus, the historic heart of the University of Toronto. University College stands nearby, and students hurry past on their way to class. You suddenly realize you're missing important items!\n\nYour goal: find your USB drive, laptop charger, and lucky mug, then DEPOSIT them at Oak House (Location 15) before 1pm.\n\nIMPORTANT: You can only carry 2 items at a time.\n\nYou can DROP items anywhere, but DEPOSIT only counts at Oak House.\n\nYou can go east or south.",
       "available_commands": {
         "go east": 2,
         "go south": 5
@@ -13,9 +13,9 @@
     },
     {
       "id": 2,
-      "name": "Main Path",
-      "brief_description": "You are on the main campus path.",
-      "long_description": "LOCATION 2\n\nYou are walking along the main campus path. Students are rushing to their classes. There's a construction wall to the east blocking the path. You can go west back to the entrance or south.",
+      "name": "University College",
+      "brief_description": "You are near University College.",
+      "long_description": "LOCATION 2\n\nYou are walking past University College, one of the oldest buildings on campus. Its Romanesque architecture towers above you. A construction wall blocks the eastern path.\n\nYou can go west back to Front Campus or south.",
       "available_commands": {
         "go west": 1,
         "go south": 5
@@ -24,9 +24,9 @@
     },
     {
       "id": 4,
-      "name": "Campus Cafe",
-      "brief_description": "You are at the campus cafe.",
-      "long_description": "LOCATION 4\n\nYou are at the busy campus cafe. The smell of coffee fills the air. You see your T-card on a table and your lucky mug near the counter!\n\nRemember: You can only carry 2 items at a time.\n- DROP: Leave items here temporarily (can pick up later)\n- DEPOSIT: Only works at Oak House for earning points\n\nYou can go south or west.",
+      "name": "Second Cup",
+      "brief_description": "You are inside Second Cup.",
+      "long_description": "LOCATION 4\n\nYou are inside Second Cup. The smell of coffee fills the air, and students are typing furiously on laptops. On a nearby table, you spot your T-card and your lucky mug!\n\nRemember:\n- You can only carry 2 items.\n- DROP items here temporarily.\n- DEPOSIT only matters at Oak House.\n\nYou can go south or west.",
       "available_commands": {
         "go south": 8,
         "go west": 2,
@@ -47,9 +47,9 @@
     },
     {
       "id": 5,
-      "name": "West Plaza",
-      "brief_description": "You are at the west plaza.",
-      "long_description": "LOCATION 5\n\nYou are at a small plaza on the west side of campus. Benches are arranged in a circle around a small garden. There's a wall to the east blocking the path. You can go north back to the entrance or south.",
+      "name": "McLennan Physical Laboratories",
+      "brief_description": "You are outside McLennan Physical Laboratories.",
+      "long_description": "LOCATION 5\n\nYou are standing outside McLennan Physical Laboratories, a concrete physics building known for its quiet atmosphere. Footsteps echo through the narrow walkways. A wall blocks the path to the east.\n\nYou can go north toward Front Campus or south.",
       "available_commands": {
         "go north": 1,
         "go south": 9
@@ -58,9 +58,9 @@
     },
     {
       "id": 8,
-      "name": "East Corridor",
-      "brief_description": "You are in the east corridor.",
-      "long_description": "LOCATION 8\n\nYou are in a narrow corridor connecting the cafe to the southern areas. The walls are lined with notice boards. You can go north back to the cafe, south, or west.",
+      "name": "Woodsworth College",
+      "brief_description": "You are inside Woodsworth College.",
+      "long_description": "LOCATION 8\n\nYou are walking through Woodsworth College, a commuter-focused college with quiet hallways and study spaces. Bulletin boards advertise academic advising and campus events.\n\nYou can go north to Second Cup, south, or west toward McLennan Physical Laboratories.",
       "available_commands": {
         "go north": 4,
         "go south": 12,
@@ -70,9 +70,9 @@
     },
     {
       "id": 9,
-      "name": "South Plaza",
-      "brief_description": "You are at the south plaza.",
-      "long_description": "LOCATION 9\n\nYou are at the south plaza. A large fountain sits in the center, water gently splashing. Students are studying on nearby benches. You can go north, east, or south.",
+      "name": "Trinity College",
+      "brief_description": "You are in Trinity College courtyard.",
+      "long_description": "LOCATION 9\n\nYou stand in the courtyard of Trinity College. Gothic stone buildings surround you, and the atmosphere is calm and academic. A fountain trickles quietly nearby.\n\nYou can go north toward McLennan Physical Laboratories, east, or south toward Robarts Library.",
       "available_commands": {
         "go north": 5,
         "go east": 10,
@@ -82,9 +82,9 @@
     },
     {
       "id": 10,
-      "name": "Garden Path",
-      "brief_description": "You are on a garden path.",
-      "long_description": "LOCATION 10\n\nYou are walking along a peaceful garden path. Colorful flowers bloom on both sides, and trees provide shade. You can go west, east, or south.",
+      "name": "New College",
+      "brief_description": "You are near New College.",
+      "long_description": "LOCATION 10\n\nYou are walking past New College. The area feels open and modern, with green spaces and students relaxing between classes.\n\nYou can go west, east, or south.",
       "available_commands": {
         "go west": 9,
         "go east": 11,
@@ -94,13 +94,13 @@
     },
     {
       "id": 11,
-      "name": "Bahen Center for Information Technology",
-      "brief_description": "You are at the Bahen Center.",
-      "long_description": "LOCATION 11 - BAHEN CENTER\n\nYou are at the Bahen Center for Information Technology. You were working here yesterday! Your USB drive is on a desk in the corner, and your laptop charger is plugged into the wall!\n\nRemember: You can only carry 2 items at a time. You can DROP items here if needed.\n\nYou can go west, south, or east.",
+      "name": "Bahen Centre for Information Technology",
+      "brief_description": "You are at the Bahen Centre.",
+      "long_description": "LOCATION 11\n\nYou are inside the Bahen Centre for Information Technology. You were coding here yesterday. Your USB drive sits on a desk, and your laptop charger is plugged into the wall.\n\nRemember: You can only carry 2 items.\n\nYou can go west, east, or south.",
       "available_commands": {
         "go west": 10,
-        "go south": 15,
         "go east": 12,
+        "go south": 15,
         "pick up usb drive": 11,
         "pick up laptop charger": 11,
         "drop usb drive": 11,
@@ -118,9 +118,9 @@
     },
     {
       "id": 12,
-      "name": "Science Building",
-      "brief_description": "You are at the science building.",
-      "long_description": "LOCATION 12\n\nYou are at the main science building. Through the windows, you can see lab equipment and students conducting experiments. You can go west, north, or south.",
+      "name": "Earth Sciences Centre",
+      "brief_description": "You are at the Earth Sciences Centre.",
+      "long_description": "LOCATION 12\n\nYou are near the Earth Sciences Centre. Glass walls reveal students studying geology and environmental science.\n\nYou can go west, north, or south.",
       "available_commands": {
         "go west": 11,
         "go north": 8,
@@ -132,7 +132,7 @@
       "id": 13,
       "name": "Robarts Library",
       "brief_description": "You are at Robarts Library.",
-      "long_description": "LOCATION 13 - ROBARTS LIBRARY 🔒\n\nYou are at the entrance of Robarts Library. The massive brutalist building looms above.\n\n🔑 ENTRANCE REQUIREMENT: You must have T-card in your inventory to enter.\nOnce you have the T-card, it never expires, but you must carry it each time you want to enter.\n\nInside, you can see a dorm key on a study desk!\n\nYou can go north or east.",
+      "long_description": "LOCATION 13\n\nYou stand at the entrance of Robarts Library, its massive brutalist structure looming overhead.\n\nENTRANCE REQUIREMENT: You must have your T-card in your inventory to enter.\n\nInside, you notice a Dorm Key left on a study desk.\n\nYou can go north or east.",
       "available_commands": {
         "go north": 9,
         "go east": 14,
@@ -152,9 +152,9 @@
     },
     {
       "id": 14,
-      "name": "Central Plaza",
-      "brief_description": "You are at the central plaza.",
-      "long_description": "LOCATION 14\n\nYou are at a central plaza where many paths intersect. This is a busy crossroads on campus. Students are sitting on benches, chatting and eating lunch. You can go north, west, or east.",
+      "name": "Sidney Smith Hall",
+      "brief_description": "You are near Sidney Smith Hall.",
+      "long_description": "LOCATION 14\n\nYou are standing near Sidney Smith Hall, a major humanities building. Students pass by discussing essays and lectures.\n\nYou can go north, west, or east.",
       "available_commands": {
         "go north": 10,
         "go west": 13,
@@ -165,8 +165,8 @@
     {
       "id": 15,
       "name": "Oak House Residence",
-      "brief_description": "You are at Oak House residence - THE WIN LOCATION!",
-      "long_description": "LOCATION 15 - OAK HOUSE 🏆\n\nYou are at Oak House residence. This is your TARGET location!\n\n🔑 ENTRANCE REQUIREMENT: You must have Dorm Key in your inventory to enter.\nOnce you have the Dorm Key, it never expires, but you must carry it each time you want to enter.\n\n🎯 TO WIN: Use DEPOSIT command to deliver all THREE required items here:\n  1. USB Drive\n  2. Laptop Charger\n  3. Lucky Mug\n\n📝 Commands:\n  - DROP: Leave items here temporarily (no points)\n  - DEPOSIT: Permanently deliver items (earn points + count toward win)\n\nYou can go west, east, or north.",
+      "brief_description": "You are at Oak House Residence.",
+      "long_description": "LOCATION 15\n\nYou arrive at Oak House Residence — your FINAL DESTINATION.\n\nENTRANCE REQUIREMENT: You must have the Dorm Key in your inventory.\n\nTO WIN: DEPOSIT all three required items here:\n1. USB Drive\n2. Laptop Charger\n3. Lucky Mug\n\nDROP leaves items temporarily.\nDEPOSIT permanently delivers items and earns points.\n\nYou can go west, east, or north.",
       "available_commands": {
         "go west": 14,
         "go east": 16,
@@ -186,9 +186,9 @@
     },
     {
       "id": 16,
-      "name": "Sports Complex",
-      "brief_description": "You are at the sports complex.",
-      "long_description": "LOCATION 16\n\nYou are at the athletic sports complex. You can hear the sounds of basketballs bouncing and people cheering inside. This is the far corner of campus. You can go west or north.",
+      "name": "Athletic Centre",
+      "brief_description": "You are at the Athletic Centre.",
+      "long_description": "LOCATION 16\n\nYou are at the Athletic Centre. The sounds of basketballs bouncing and people cheering echo from inside.\n\nYou can go west or north.",
       "available_commands": {
         "go west": 15,
         "go north": 12
@@ -199,37 +199,37 @@
   "items": [
     {
       "name": "USB Drive",
-      "description": "A silver USB drive with all your project files. You desperately need this!",
+      "description": "A silver USB drive with all your project files.",
       "start_position": 11,
       "target_position": 15,
       "target_points": 50
     },
     {
       "name": "Laptop Charger",
-      "description": "Your laptop charger. Your battery is almost dead!",
+      "description": "Your laptop charger. Your battery is almost dead.",
       "start_position": 11,
       "target_position": 15,
       "target_points": 75
     },
     {
       "name": "Lucky Mug",
-      "description": "Your lucky U of T mug. You can't submit without it!",
+      "description": "Your lucky U of T mug.",
       "start_position": 4,
       "target_position": 15,
       "target_points": 60
     },
     {
       "name": "T-card",
-      "description": "Your student ID card. Needed to enter Robarts Library. Never expires once you have it!",
+      "description": "Your student ID card. Required to enter Robarts Library.",
       "start_position": 4,
-      "target_position": 4,
+      "target_position": 13,
       "target_points": 0
     },
     {
       "name": "Dorm Key",
-      "description": "A key to Oak House residence. Required to enter! Never expires once you have it!",
+      "description": "A key to Oak House residence.",
       "start_position": 13,
-      "target_position": 13,
+      "target_position": 15,
       "target_points": 0
     }
   ]
