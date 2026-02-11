@@ -60,6 +60,12 @@ class AdventureGame:
     _items: list[Item]
     current_location_id: int  # Suggested attribute, can be removed
     ongoing: bool  # Suggested attribute, can be removed
+    score: int
+    moves: int
+    max_moves: int
+    inventory: dict[str, Item]
+    max_inventory_size: int
+    deposited_items: set[str]
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
         """
@@ -86,9 +92,10 @@ class AdventureGame:
         self.ongoing = True  # whether the game is ongoing
         self.score = 0
         self.moves = 0
-        self.max_moves = 100
+        self.max_moves = 30
         self.inventory = {}
         self.max_inventory_size = 2
+        self.deposited_items = set()
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item]]:
@@ -102,12 +109,16 @@ class AdventureGame:
         locations = {}
         for loc_data in data['locations']:  # Go through each element associated with the 'locations' key in the file
             location_obj = Location(loc_data['id'], loc_data['brief_description'], loc_data['long_description'],
-                                    loc_data['available_commands'], loc_data['items'])
+                                    loc_data['available_commands'], loc_data['items'].copy(),
+                                    loc_data['name'], loc_data['visited'])
             locations[loc_data['id']] = location_obj
 
         items = []
-        # TODO: Add Item objects to the items list; your code should be structured similarly to the loop above
         # YOUR CODE BELOW
+        for item_data in data['items']:
+            item_obj = Item(item_data['name'], item_data['start_position'],
+                            item_data['target_position'], item_data['target_points'], item_data['description'])
+            items.append(item_obj)
 
         return locations, items
 
@@ -116,24 +127,106 @@ class AdventureGame:
         If no ID is provided, return the Location object associated with the current location.
         """
 
-        # TODO: Complete this method as specified
-        # YOUR CODE BELOW
+        if loc_id is None:
+            return self._locations[self.current_location_id]
+        else:
+            return self._locations[loc_id]
+
+    def check_locked_door(self, destination_id: int) -> bool:
+        """
+        Check if the door to destination_id is locked or not.
+        Return True if the player can enter, if not return False.
+        """
+        if destination_id == 13:
+            if "T-card" not in self.inventory:
+                print("The library is locked! You need T-card in your inventory!")
+                return False
+            else:
+                print("Library doors unlock!")
+                return True
+        if destination_id == 15:
+            if "Dorm Key" not in self.inventory:
+                print("The residence is locked, you need Dorm Key in you inventory!")
+                return False
+            else:
+                print("The residence is unlock!")
+                print("This is Oak House, use deposit command to earn points!")
+                return True
+        return True
+
+    def check_inventory_full(self) -> bool:
+        """
+        Check if inventory is full.
+        Return True if full, if not return False.
+        """
+        return len(self.inventory) >= self.max_inventory_size
+
+    def check_win(self) -> bool:
+        """
+        Check if the player won the game.
+        Win condition: All 3 required items must be deposited at Oak House
+        """
+        required_items = {"USB Drive", "Laptop Charger", "Lucky Mug"}
+        return all(item in self.deposited_items for item in required_items)
+
+    def check_lose(self) -> bool:
+        """
+        Check if the player lost the game.
+        Lost condition: Player used all available moves
+        """
+        return self.moves >= self.max_moves
+
+    def calculate_deposit_points(self, deposited_item_name: str) -> int:
+        """
+        Calculate points for depositing an item at the current location.
+        Returns points that the user earned (if the item is already deposited then
+        0 points)
+        """
+        if deposited_item_name in self.deposited_items:
+            return 0
+        for items in self._items:
+            if items.name == deposited_item_name:
+                if self.current_location_id == items.target_position:
+                    return items.target_points
+                return 0
+        return 0
+
+    def get_item(self, name: str) -> Optional[Item]:
+        """Return the Item object with the given name, or None if no such item exists."""
+        for items in self._items:
+            if items.name == name:
+                return items
+        return None
 
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
-    game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
+    game = AdventureGame('project1/game_data.json', 1)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
+
+    print("You wake up in a panic. Your CS project is due at 1pm today, \n but you are missing critical items!")
+    print("MISSION: Find and Deposit these items at Oak House:")
+    print("     1. USB Drive")
+    print("     2. Laptop Charger")
+    print("     3. Lucky Mug")
+    print("\n*** You can only carry 2 items at a time! ***")
+    print("\nCommands:")
+    print("     1. drop: Leave items on ground (can pick up later, no points)")
+    print("     2. deposit: Deliver items at Oak House (you can earn points)")
+    print("\nLocked Locations:")
+    print("     1. Robarts Library requires T-card")
+    print("     2. Oak House requires Dorm Key")
+    print("*** Keys never expire! Just keep them in inventory to enter those locations")
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
@@ -142,13 +235,16 @@ if __name__ == "__main__":
 
         location = game.get_location()
 
-        # TODO: Add new Event to game log to represent current game location
         #  Note that the <choice> variable should be the command which led to this event
-        # YOUR CODE HERE
+        event = Event(location.id_num, location.long_description)
+        game_log.add_event(event, choice)
 
-        # TODO: Depending on whether or not it's been visited before,
         #  print either full description (first time visit) or brief description (every subsequent visit) of location
-        # YOUR CODE HERE
+        if location.visited:
+            print(location.brief_description)
+        else:
+            print(location.long_description)
+            location.visited = True
 
         # Display possible actions at this location
         print("What to do? Choose from: look, inventory, score, log, quit")
@@ -166,15 +262,122 @@ if __name__ == "__main__":
         print("You decided to:", choice)
 
         if choice in menu:
-            # TODO: Handle each menu command as appropriate
             if choice == "log":
                 game_log.display_events()
-            # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
+            elif choice == "look":
+                print(location.long_description)
+            elif choice == "inventory":
+                print("Your inventory:", len(game.inventory), "/", game.max_inventory_size)
+                for item_name in game.inventory:
+                    print(" - ", item_name)
+            elif choice == "score":
+                print("Score:", game.score)
+                print("Moves:", game.moves, "/", game.max_moves)
+                print("Deposited:", len(game.deposited_items), "/3")
+            elif choice == "quit":
+                print("Game Over!")
+                game.ongoing = False
 
         else:
-            # Handle non-menu actions
             result = location.available_commands[choice]
-            game.current_location_id = result
 
-            # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
-            # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game
+            if "pick up " in choice:
+                item_name_input = choice[8:]
+                item_found = ""
+                for item_name in location.items:
+                    if item_name.lower() == item_name_input:
+                        item_found = item_name
+                if item_found != "":
+                    if len(game.inventory) >= game.max_inventory_size:
+                        print("Inventory is full!")
+                    else:
+                        item = game.get_item(item_found)
+                        if item is not None:
+                            game.inventory[item_found] = item
+                            location.items.remove(item_found)
+                            print("Picked up:", item_found)
+
+                            if item_found in ["USB Drive", "Laptop Charger", "Lucky Mug"]:
+                                game.score = game.score + 0
+                                print("Score:", game.score)
+                else:
+                    print("Item is not here!")
+
+            elif "drop " in choice:
+                item_name_input = choice[5:]
+                item_found = ""
+                for item_name in game.inventory:
+                    if item_name.lower() == item_name_input:
+                        item_found = item_name
+                if item_found != "":
+                    new_inventory = {}
+                    for item_name in game.inventory:
+                        if item_name != item_found:
+                            new_inventory[item_name] = game.inventory[item_name]
+                    game.inventory = new_inventory
+                    location.items.append(item_found)
+                    print("Dropped:", item_found)
+                else:
+                    print("You don't have that!")
+
+            elif "deposit " in choice:
+                item_name_input = choice[8:]
+                if location.id_num != 15:
+                    print("You can only deposit at Oak House!")
+                else:
+                    item_found = ""
+                    for item_name in game.inventory:
+                        if item_name.lower() == item_name_input:
+                            item_found = item_name
+                    if item_found != "":
+                        points = 0
+                        item = game.get_item(item_found)
+                        if item is not None and location.id_num == item.target_position:
+                            points = item.target_points
+                        new_inventory = {}
+                        for item_name in game.inventory:
+                            if item_name != item_found:
+                                new_inventory[item_name] = game.inventory[item_name]
+                        game.inventory = new_inventory
+                        game.deposited_items.add(item_found)
+                        print("Deposited:", item_found)
+
+                        if points > 0:
+                            game.score = game.score + points
+                            print("Earned", points, "points!")
+                            print("Score:", game.score)
+                    else:
+                        print("You don't have that!")
+
+            elif "go " in choice:
+                next_id = location.available_commands[choice]
+                can_enter = True
+                if next_id == 13:
+                    if "T-card" not in game.inventory:
+                        print("Robarts is locked! You need a T-card!")
+                        can_enter = False
+                if next_id == 15:
+                    if "Dorm Key" not in game.inventory:
+                        print("Oak House is locked! You need a Dorm Key!")
+                        can_enter = False
+                if can_enter:
+                    game.current_location_id = next_id
+                    game.moves = game.moves + 1
+
+        win = True
+        if "USB Drive" not in game.deposited_items:
+            win = False
+        if "Laptop Charger" not in game.deposited_items:
+            win = False
+        if "Lucky Mug" not in game.deposited_items:
+            win = False
+
+        if win:
+            print("You win!")
+            print("Final Score:", game.score)
+            game.ongoing = False
+
+        if game.moves >= game.max_moves:
+            print("Game Over!")
+            print("Final Score:", game.score)
+            game.ongoing = False
