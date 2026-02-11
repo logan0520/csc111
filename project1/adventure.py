@@ -35,20 +35,15 @@ class AdventureGame:
 
     Instance Attributes:
         - current_location_id: The ID of the location where the players currently is
-        - ongoing: Whether the game is still in progress
         - score: The player's current score
         - moves: The number of moves that the player has made
-        - max_moves: The maximum number of moves allowed
         - inventory: Dictionary of items currently in player's possession
-        - max_inventory_size: Maximum number of items player can carry (max 2)
         - deposited_items: Set of item names that have been deposited at Oak House
 
     Representation Invariants:
         - current_location_id in self._locations
         - score >= 0
         - moves >= 0
-        - max_moves > 0
-        - len(inventory) <= max_inventory_size
     """
 
     # Private Instance Attributes (do NOT remove these two attributes):
@@ -59,12 +54,9 @@ class AdventureGame:
     _locations: dict[int, Location]
     _items: list[Item]
     current_location_id: int  # Suggested attribute, can be removed
-    ongoing: bool  # Suggested attribute, can be removed
     score: int
     moves: int
-    max_moves: int
     inventory: dict[str, Item]
-    max_inventory_size: int
     deposited_items: set[str]
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
@@ -89,12 +81,9 @@ class AdventureGame:
 
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.current_location_id = initial_location_id  # game begins at this location
-        self.ongoing = True  # whether the game is ongoing
         self.score = 0
         self.moves = 0
-        self.max_moves = 30
         self.inventory = {}
-        self.max_inventory_size = 2
         self.deposited_items = set()
 
     @staticmethod
@@ -159,7 +148,7 @@ class AdventureGame:
         Check if inventory is full.
         Return True if full, if not return False.
         """
-        return len(self.inventory) >= self.max_inventory_size
+        return len(self.inventory) >= 2
 
     def check_win(self) -> bool:
         """
@@ -174,7 +163,7 @@ class AdventureGame:
         Check if the player lost the game.
         Lost condition: Player used all available moves
         """
-        return self.moves >= self.max_moves
+        return self.moves >= 30
 
     def calculate_deposit_points(self, deposited_item_name: str) -> int:
         """
@@ -229,7 +218,8 @@ if __name__ == "__main__":
     print("*** Keys never expire! Just keep them in inventory to enter those locations")
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
-    while game.ongoing:
+    ongoing = True
+    while ongoing:
         # Note: If the loop body is getting too long, you should split the body up into helper functions
         # for better organization. Part of your mark will be based on how well-organized your code is.
 
@@ -267,16 +257,16 @@ if __name__ == "__main__":
             elif choice == "look":
                 print(location.long_description)
             elif choice == "inventory":
-                print("Your inventory:", len(game.inventory), "/", game.max_inventory_size)
+                print("Your inventory:", len(game.inventory), "/", 2)
                 for item_name in game.inventory:
                     print(" - ", item_name)
             elif choice == "score":
                 print("Score:", game.score)
-                print("Moves:", game.moves, "/", game.max_moves)
+                print("Moves:", game.moves, "/", 30)
                 print("Deposited:", len(game.deposited_items), "/3")
             elif choice == "quit":
                 print("Game Over!")
-                game.ongoing = False
+                ongoing = False
 
         else:
             result = location.available_commands[choice]
@@ -288,7 +278,7 @@ if __name__ == "__main__":
                     if item_name.lower() == item_name_input:
                         item_found = item_name
                 if item_found != "":
-                    if len(game.inventory) >= game.max_inventory_size:
+                    if len(game.inventory) >= 2:
                         print("Inventory is full!")
                     else:
                         item = game.get_item(item_found)
@@ -375,9 +365,9 @@ if __name__ == "__main__":
         if win:
             print("You win!")
             print("Final Score:", game.score)
-            game.ongoing = False
+            ongoing = False
 
-        if game.moves >= game.max_moves:
+        if game.moves >= 30:
             print("Game Over!")
             print("Final Score:", game.score)
-            game.ongoing = False
+            ongoing = False
