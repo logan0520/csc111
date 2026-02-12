@@ -37,11 +37,9 @@
         "drop usb drive": 4,
         "drop laptop charger": 4,
         "drop dorm key": 4,
-        "deposit t-card": 4,
         "deposit lucky mug": 4,
         "deposit usb drive": 4,
-        "deposit laptop charger": 4,
-        "deposit dorm key": 4
+        "deposit laptop charger": 4
       },
       "items": ["T-card", "Lucky Mug"],
       "visited": false
@@ -114,9 +112,7 @@
         "drop dorm key": 11,
         "deposit usb drive": 11,
         "deposit laptop charger": 11,
-        "deposit lucky mug": 11,
-        "deposit t-card": 11,
-        "deposit dorm key": 11
+        "deposit lucky mug": 11
       },
       "items": ["USB Drive", "Laptop Charger"],
       "visited": false
@@ -148,8 +144,6 @@
         "drop usb drive": 13,
         "drop laptop charger": 13,
         "drop lucky mug": 13,
-        "deposit dorm key": 13,
-        "deposit t-card": 13,
         "deposit usb drive": 13,
         "deposit laptop charger": 13,
         "deposit lucky mug": 13
@@ -186,9 +180,7 @@
         "drop dorm key": 15,
         "deposit usb drive": 15,
         "deposit laptop charger": 15,
-        "deposit lucky mug": 15,
-        "deposit t-card": 15,
-        "deposit dorm key": 15
+        "deposit lucky mug": 15
       },
       "items": [],
       "visited": false

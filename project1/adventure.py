@@ -163,7 +163,7 @@ class AdventureGame:
         Check if the player lost the game.
         Lost condition: Player used all available moves
         """
-        return self.moves >= 30
+        return self.moves >= 50
 
     def calculate_deposit_points(self, deposited_item_name: str) -> int:
         """
@@ -323,7 +323,7 @@ if __name__ == "__main__":
                     print(" - ", item_name)
             elif choice == "score":
                 print("Score:", game.score)
-                print("Moves:", game.moves, "/", 30)
+                print("Moves:", game.moves, "/", 50)
                 print("Deposited:", len(game.deposited_items), "/3")
             elif choice == "quit":
                 print("Game Over!")
@@ -364,13 +364,18 @@ if __name__ == "__main__":
                     if item_name.lower() == item_name_input:
                         item_found = item_name
                 if item_found != "":
-                    new_inventory = {}
-                    for item_name in game.inventory:
-                        if item_name != item_found:
-                            new_inventory[item_name] = game.inventory[item_name]
-                    game.inventory = new_inventory
-                    location.items.append(item_found)
-                    print("Dropped:", item_found)
+                    if item_found.lower() == "t-card" and location.id_num == 13:
+                        print("You cannot drop the T-card here! You need it to exit the library!")
+                    elif item_found.lower() == "dorm key" and location.id_num == 15:
+                        print("You cannot drop the Dorm Key here! You need it to enter Oak House again!")
+                    else:
+                        new_inventory = {}
+                        for item_name in game.inventory:
+                            if item_name != item_found:
+                                new_inventory[item_name] = game.inventory[item_name]
+                        game.inventory = new_inventory
+                        location.items.append(item_found)
+                        print("Dropped:", item_found)
                 else:
                     print("You don't have that!")
 
@@ -431,7 +436,7 @@ if __name__ == "__main__":
             print("Final Score:", game.score)
             ongoing = False
 
-        if game.moves >= 30:
+        if game.moves >= 50:
             print("Game Over!")
             print("Final Score:", game.score)
             ongoing = False
