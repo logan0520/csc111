@@ -188,6 +188,40 @@ class AdventureGame:
         return None
 
 
+def get_available_actions(loc: Location, inventory: dict) -> list:
+    """
+    Return filtered list of available actions based on current inventory's situation and location items.
+    """
+    actions = []
+    for act in loc.available_commands:
+        if act[:3] == "go ":
+            actions.append(act)
+        elif act[:8] == "pick up ":
+            items_name = act[8:]
+            if any(name.lower() == items_name for name in loc.items):
+                actions.append(act)
+        elif act[:5] == "drop ":
+            items_name = act[5:]
+            if any(name.lower() == items_name for name in inventory):
+                actions.append(act)
+        elif act[:8] == "deposit ":
+            items_name = act[8:]
+            if any(name.lower() == items_name for name in inventory):
+                actions.append(act)
+
+    listed_pickups = {a[8:] for a in loc.available_commands if a[:8] == "pick up "}
+    for loc_item in loc.items:
+        if loc_item.lower() not in listed_pickups:
+            actions.append("pick up " + loc_item.lower())
+
+    listed_drops = {a[5:] for a in loc.available_commands if a[:5] == "drop "}
+    for inv_item in inventory:
+        if inv_item.lower() not in listed_drops:
+            actions.append("drop " + inv_item.lower())
+
+    return actions
+
+
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
@@ -216,39 +250,66 @@ if __name__ == "__main__":
     print("     1. Robarts Library requires T-card")
     print("     2. Oak House requires Dorm Key")
     print("*** Keys never expire! Just keep them in inventory to enter those locations")
+    print("*** HINT! Dorm key at Robarts library, T-card at Cafe ***")
 
-    # Note: You may modify the code below as needed; the following starter code is just a suggestion
     ongoing = True
     while ongoing:
-        # Note: If the loop body is getting too long, you should split the body up into helper functions
-        # for better organization. Part of your mark will be based on how well-organized your code is.
 
         location = game.get_location()
 
-        #  Note that the <choice> variable should be the command which led to this event
         event = Event(location.id_num, location.long_description)
         game_log.add_event(event, choice)
 
-        #  print either full description (first time visit) or brief description (every subsequent visit) of location
         if location.visited:
             print(location.brief_description)
         else:
-            print(location.long_description)
+            descrip = location.long_description
+            if location.id_num == 13 and "T-card" in game.inventory:
+                descrip = descrip.replace("(LOCKED)", "(UNLOCKED)")
+            elif location.id_num == 15 and "Dorm Key" in game.inventory:
+                descrip = descrip.replace("(LOCKED)", "(UNLOCKED)")
+            print(descrip)
             location.visited = True
 
-        # Display possible actions at this location
+        if location.id_num == 13:
+            if "T-card" in game.inventory:
+                print("[Robarts Library: UNLOCKED - T-card in your inventory]")
+            else:
+                print("[Robarts Library: LOCKED - T-card required to enter]")
+        elif location.id_num == 15:
+            if "Dorm Key" in game.inventory:
+                print("[Oak House: UNLOCKED - Dorm Key in your inventory]")
+            else:
+                print("[Oak House: LOCKED - Dorm Key required to enter]")
+
         print("What to do? Choose from: look, inventory, score, log, quit")
         print("At this location, you can also:")
-        for action in location.available_commands:
+        for action in get_available_actions(location, game.inventory):
             print("-", action)
 
-        # Validate choice
+        def is_valid_drop(cmd: str) -> bool:
+            """
+            Check if the user can drop the item
+            """
+            return cmd[:5] == "drop " and any(name.lower() == cmd[5:] for name in game.inventory)
+
+        def is_valid_pickup(cmd: str) -> bool:
+            """
+            Check if the user can pick up the item at the current location
+            """
+            return cmd[:8] == "pick up " and any(name.lower() == cmd[8:] for name in location.items)
+
         choice = input("\nEnter action: ").lower().strip()
-        while choice not in location.available_commands and choice not in menu:
+        while not any([
+            choice in location.available_commands,
+            choice in menu,
+            is_valid_drop(choice),
+            is_valid_pickup(choice)
+        ]):
             print("That was an invalid option; try again.")
             choice = input("\nEnter action: ").lower().strip()
 
-        print("========")
+        print("========================================")
         print("You decided to:", choice)
 
         if choice in menu:
@@ -269,7 +330,10 @@ if __name__ == "__main__":
                 ongoing = False
 
         else:
-            result = location.available_commands[choice]
+            if choice in location.available_commands:
+                result = location.available_commands[choice]
+            else:
+                result = None
 
             if "pick up " in choice:
                 item_name_input = choice[8:]

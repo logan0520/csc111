@@ -18,8 +18,7 @@
       "brief_description": "LOCATION 2 - You are at University College.\n",
       "long_description": "LOCATION 2 - University College\n\nYou are at University College. A construction wall blocks the east.\n\nYou can go west or south.\n\nThis building is the oldest building on campus, built in 1853.\n",
       "available_commands": {
-        "go west": 1,
-        "go south": 5
+        "go west": 1
       },
       "items": [],
       "visited": false
@@ -66,8 +65,7 @@
       "long_description": "LOCATION 8 - Woodsworth College\n\nYou are walking through Woodsworth College.\n\nYou can go north, south, or west.\n",
       "available_commands": {
         "go north": 4,
-        "go south": 12,
-        "go west": 5
+        "go south": 12
       },
       "items": [],
       "visited": false
@@ -140,7 +138,7 @@
       "id": 13,
       "name": "Robarts Library",
       "brief_description": "LOCATION 13 - You are at Robarts Library.\n",
-      "long_description": "LOCATION 13 - Robarts Library (LOCKED)\n\nYou are at Robarts Library. You need T-card to enter!\n\nInside is a Dorm Key.\n\nYou can go north or east.\n\nThis library is the biggest library in Canada.\n",
+      "long_description": "LOCATION 13 - Robarts Library (LOCKED)\n\nYou are at Robarts Library. You need T-card to enter!\n\nThere is a Dorm Key.\n\nYou can go north or east.\n\nThis library is the biggest library in Canada.\n",
       "available_commands": {
         "go north": 9,
         "go east": 14,
