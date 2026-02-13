@@ -103,7 +103,7 @@ class AdventureGame:
             locations[loc_data['id']] = location_obj
 
         items = []
-        # YOUR CODE BELOW
+
         for item_data in data['items']:
             item_obj = Item(item_data['name'], item_data['start_position'],
                             item_data['target_position'], item_data['target_points'], item_data['description'])
@@ -123,8 +123,7 @@ class AdventureGame:
 
     def check_locked_door(self, destination_id: int) -> bool:
         """
-        Check if the door to destination_id is locked or not.
-        Return True if the player can enter, if not return False.
+        Check if the door is locked or not
         """
         if destination_id == 13:
             if "T-card" not in self.inventory:
@@ -145,15 +144,14 @@ class AdventureGame:
 
     def check_inventory_full(self) -> bool:
         """
-        Check if inventory is full.
-        Return True if full, if not return False.
+        Check if inventory is full (max 2)
         """
         return len(self.inventory) >= 2
 
     def check_win(self) -> bool:
         """
-        Check if the player won the game.
-        Win condition: All 3 required items must be deposited at Oak House
+        Check if the player won the game
+        Win condition: All 3 required items are deposited at Oak House
         """
         required_items = {"USB Drive", "Laptop Charger", "Lucky Mug"}
         return all(item in self.deposited_items for item in required_items)
@@ -161,13 +159,13 @@ class AdventureGame:
     def check_lose(self) -> bool:
         """
         Check if the player lost the game.
-        Lost condition: Player used all available moves
+        Lost condition: Player used all available moves which is 50
         """
         return self.moves >= 50
 
     def calculate_deposit_points(self, deposited_item_name: str) -> int:
         """
-        Calculate points for depositing an item at the current location.
+        Calculate points for depositing an item at the current location
         Returns points that the user earned (if the item is already deposited then
         0 points)
         """
@@ -181,16 +179,30 @@ class AdventureGame:
         return 0
 
     def get_item(self, name: str) -> Optional[Item]:
-        """Return the Item object with the given name, or None if no such item exists."""
+        """
+        Return the object Item with the given name, or None if no such item exists
+        """
         for items in self._items:
             if items.name == name:
                 return items
         return None
 
 
+def listed_items(commands: dict, words: str) -> set[str]:
+    """
+    Return a set of item names from command that start with the given words
+    """
+    results = set()
+    word_len = len(words)
+    for command in commands:
+        if command[:word_len] == words:
+            results.add(command[word_len:])
+    return results
+
+
 def get_available_actions(loc: Location, inventory: dict) -> list:
     """
-    Return filtered list of available actions based on current inventory's situation and location items.
+    Return filtered list of available actions based on current inventory and location's items
     """
     actions = []
     for act in loc.available_commands:
@@ -209,12 +221,14 @@ def get_available_actions(loc: Location, inventory: dict) -> list:
             if any(name.lower() == items_name for name in inventory):
                 actions.append(act)
 
-    listed_pickups = {a[8:] for a in loc.available_commands if a[:8] == "pick up "}
+    listed_pickups = listed_items(loc.available_commands, "pick up ")
+
     for loc_item in loc.items:
         if loc_item.lower() not in listed_pickups:
             actions.append("pick up " + loc_item.lower())
 
-    listed_drops = {a[5:] for a in loc.available_commands if a[:5] == "drop "}
+    listed_drops = listed_items(loc.available_commands, "drop ")
+
     for inv_item in inventory:
         if inv_item.lower() not in listed_drops:
             actions.append("drop " + inv_item.lower())
@@ -282,23 +296,35 @@ if __name__ == "__main__":
             else:
                 print("[Oak House: LOCKED - Dorm Key required to enter]")
 
+        # Display possible actions at this location
         print("What to do? Choose from: look, inventory, score, log, quit")
         print("At this location, you can also:")
         for action in get_available_actions(location, game.inventory):
             print("-", action)
 
-        def is_valid_drop(cmd: str) -> bool:
+        def is_valid_drop(comm: str) -> bool:
             """
             Check if the user can drop the item
             """
-            return cmd[:5] == "drop " and any(name.lower() == cmd[5:] for name in game.inventory)
+            if comm[:5] == "drop ":
+                items_name = comm[5:]
+                for name in game.inventory:
+                    if name.lower() == items_name:
+                        return True
+            return False
 
-        def is_valid_pickup(cmd: str) -> bool:
+        def is_valid_pickup(comm: str) -> bool:
             """
             Check if the user can pick up the item at the current location
             """
-            return cmd[:8] == "pick up " and any(name.lower() == cmd[8:] for name in location.items)
+            if comm[:8] == "pick up ":
+                items_name = comm[8:]
+                for name in location.items:
+                    if name.lower() == items_name:
+                        return True
+            return False
 
+        # Validate choice
         choice = input("\nEnter action: ").lower().strip()
         while not any([
             choice in location.available_commands,
@@ -309,7 +335,7 @@ if __name__ == "__main__":
             print("That was an invalid option; try again.")
             choice = input("\nEnter action: ").lower().strip()
 
-        print("========================================")
+        print("=================================================")
         print("You decided to:", choice)
 
         if choice in menu:
@@ -330,6 +356,7 @@ if __name__ == "__main__":
                 ongoing = False
 
         else:
+            # Handle non-menu actions
             if choice in location.available_commands:
                 result = location.available_commands[choice]
             else:
@@ -365,9 +392,9 @@ if __name__ == "__main__":
                         item_found = item_name
                 if item_found != "":
                     if item_found.lower() == "t-card" and location.id_num == 13:
-                        print("You cannot drop the T-card here! You need it to exit the library!")
+                        print("You cannot drop the T-card here!")
                     elif item_found.lower() == "dorm key" and location.id_num == 15:
-                        print("You cannot drop the Dorm Key here! You need it to enter Oak House again!")
+                        print("You cannot drop the Dorm Key here!")
                     else:
                         new_inventory = {}
                         for item_name in game.inventory:
