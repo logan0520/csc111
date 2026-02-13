@@ -190,8 +190,7 @@ if __name__ == "__main__":
     })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
-    game = AdventureGame('project1/game_data.json',
-                         1)  # load data, setting initial location ID to 1
+    game = AdventureGame('project1/game_data.json', 1)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
 
