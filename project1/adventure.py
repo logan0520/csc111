@@ -121,63 +121,6 @@ class AdventureGame:
         else:
             return self._locations[loc_id]
 
-    def check_locked_door(self, destination_id: int) -> bool:
-        """
-        Check if the door is locked or not
-        """
-        if destination_id == 13:
-            if "T-card" not in self.inventory:
-                print("The library is locked! You need T-card in your inventory!")
-                return False
-            else:
-                print("Library doors unlock!")
-                return True
-        if destination_id == 15:
-            if "Dorm Key" not in self.inventory:
-                print("The residence is locked, you need Dorm Key in you inventory!")
-                return False
-            else:
-                print("The residence is unlock!")
-                print("This is Oak House, use deposit command to earn points!")
-                return True
-        return True
-
-    def check_inventory_full(self) -> bool:
-        """
-        Check if inventory is full (max 2)
-        """
-        return len(self.inventory) >= 2
-
-    def check_win(self) -> bool:
-        """
-        Check if the player won the game
-        Win condition: All 3 required items are deposited at Oak House
-        """
-        required_items = {"USB Drive", "Laptop Charger", "Lucky Mug"}
-        return all(item in self.deposited_items for item in required_items)
-
-    def check_lose(self) -> bool:
-        """
-        Check if the player lost the game.
-        Lost condition: Player used all available moves which is 50
-        """
-        return self.moves >= 50
-
-    def calculate_deposit_points(self, deposited_item_name: str) -> int:
-        """
-        Calculate points for depositing an item at the current location
-        Returns points that the user earned (if the item is already deposited then
-        0 points)
-        """
-        if deposited_item_name in self.deposited_items:
-            return 0
-        for items in self._items:
-            if items.name == deposited_item_name:
-                if self.current_location_id == items.target_position:
-                    return items.target_points
-                return 0
-        return 0
-
     def get_item(self, name: str) -> Optional[Item]:
         """
         Return the object Item with the given name, or None if no such item exists
